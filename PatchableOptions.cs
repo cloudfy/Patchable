@@ -6,6 +6,7 @@
         {
             IgnoreInvalidProperties = ignoreInvalidProperties;
         }
+
         public bool IgnoreInvalidProperties { get; }
     }
 }
