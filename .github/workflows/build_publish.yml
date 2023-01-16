@@ -29,3 +29,6 @@ jobs:
  #     run: dotnet build --configuration Release --no-restore
     - name: Pack
       run: dotnet pack --configuration Release 
+
+    - name: Publish
+      run: dotnet nuget push **\*.nupkg -k ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json
