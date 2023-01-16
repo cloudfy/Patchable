@@ -9,7 +9,7 @@ using System.Text.Json;
 namespace Patchable
 {
     public sealed class Patchable<TEntity> 
-        : IDictionary<string, object> where TEntity : class, new()
+        : IDictionary<string, object> where TEntity : class
     {
         private readonly Dictionary<string, object> _valueDictionary = new Dictionary<string, object>();
         private readonly List<PatchablePropInfo> _entityProperties = new List<PatchablePropInfo>();
