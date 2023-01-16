@@ -3,6 +3,7 @@ using System.Reflection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace Patchable 
 {
@@ -15,8 +16,7 @@ namespace Patchable
 
         internal static PatchableCache GetOrCreateCache()
         {
-            if (_instance is null)
-                _instance = new PatchableCache();
+            _instance ??= new PatchableCache();
 
             return _instance;
         }
@@ -29,8 +29,17 @@ namespace Patchable
             }
 
             return _entityProperties[typeof(T)]
+                .Where(p => FilterIgnoredProperty(p) == false)
                 .Select(p => PatchablePropInfo.FromPropertyInfo(p))
                 .ToList();
+        }
+
+        private bool FilterIgnoredProperty(PropertyInfo propertyInfo) 
+        {
+            var jsonIgnoreAttribute = propertyInfo.GetCustomAttribute<JsonIgnoreAttribute>(true);
+            if (jsonIgnoreAttribute is null)
+                return false;
+            return (jsonIgnoreAttribute.Condition != JsonIgnoreCondition.Never);
         }
     }
 }
