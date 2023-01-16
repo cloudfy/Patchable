@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard21</TargetFrameworks>
+    <PackageId>Patchable</PackageId>
+    <Description>Enables easy patch (partial changes) without using JsonPatch for ASP.NET and ASP.NET Core.</Description>
+    <Version>1.0.1</Version>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <FileVersion>1.0.1.0</FileVersion>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <PackageLicenseUrl>https://github.com/cloudfy/Patchable/blob/main/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/cloudfy/Patchable</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/cloudfy/Patchable</RepositoryUrl>
+    <PackageTags>patch http-patch partial-entity-changes web-api asp-net-web-api entity-framework entity-framework-core asp-net asp-net-core</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" Version="7.0.1" />
+  </ItemGroup>
+
+</Project>
