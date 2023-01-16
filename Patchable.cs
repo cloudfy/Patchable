@@ -41,18 +41,34 @@ namespace Patchable
                 {
                     throw new ArgumentException($"{typeof(TEntity).Name} does not have a property {key}.", key);
                 }
-               
+                else if (property is null && 
+                    patchOptions.IgnoreInvalidProperties == true)
+                {
+                    continue; // ignored
+                }
+
                 var value = _valueDictionary[key];
 
-                if (Helpers.TypeHelper.IsNullable(property.Property) == false &&
+                if (TypeHelper.IsNullable(property.Property) == false &&
                     value is null)
                 {
                     throw new ArgumentNullException($"{key} value is null, however property does not allow null.");
                 }
 
-                var jsonElement = (JsonElement)_valueDictionary[key];
-                var valueValue = JsonHelper.ToObject(jsonElement, property.Property.PropertyType);
-                property.Property.SetValue(entity, valueValue);
+                try
+                {
+                    var jsonElement = (JsonElement)_valueDictionary[key];
+                    var valueValue = JsonHelper.ToObject(jsonElement, property.Property.PropertyType);
+                    property.Property.SetValue(entity, valueValue);
+                }
+                catch (JsonException e)
+                {
+                    throw new FormatException($"Invalid format patching property {key}.", e);
+                }
+                catch
+                {
+                    throw;
+                }
             }
         }
 
