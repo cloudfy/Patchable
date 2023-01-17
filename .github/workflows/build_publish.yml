@@ -1,3 +1,5 @@
+name: Distribute Nuget version
+run-name: Build and provide a new Nuget package.
 on:
   pull_request:
     branches:
