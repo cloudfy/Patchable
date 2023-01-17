@@ -1,4 +1,5 @@
 ﻿using Patchable.Helpers;
+using Patchable.Internals;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -25,6 +26,7 @@ namespace Patchable
         /// <param name="entity">Entity to patch.</param>
         /// <param name="options">Optional. Options for patch operation.</param>
         /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="InvalidPropertyException"></exception>
         public void Patch<TTarget>(TTarget entity, PatchableOptions options = null)
             where TTarget : class 
         {
@@ -39,6 +41,7 @@ namespace Patchable
         /// <param name="entity">Entity to patch.</param>
         /// <param name="options">Optional. Options for patch operation.</param>
         /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="InvalidPropertyException"></exception>
         public void Patch(TEntity entity, PatchableOptions options = null)
             => Patch<TEntity>(entity, options);
 
@@ -65,7 +68,7 @@ namespace Patchable
                 if (property is null &&
                     patchOptions.IgnoreInvalidProperties == false)
                 {
-                    throw new ArgumentException($"{typeof(TEntity).Name} does not have a property {key}.", key);
+                    throw new InvalidPropertyException(typeof(TEntity), key);
                 }
                 else if (property is null && 
                     patchOptions.IgnoreInvalidProperties == true)
@@ -89,7 +92,7 @@ namespace Patchable
                 }
                 catch (JsonException e)
                 {
-                    throw new FormatException($"Invalid format patching property {key}.", e);
+                    throw new FormatException($"Invalid format patching property name '{key}'.", e);
                 }
                 catch
                 {

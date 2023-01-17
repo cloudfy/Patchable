@@ -3,9 +3,18 @@ using System.Reflection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
+/* Unmerged change from project 'Patchable (net6)'
+Before:
+using System.Text.Json.Serialization;
+After:
+using System.Text.Json.Serialization;
+using Patchable;
+using Patchable.Internals;
+*/
 using System.Text.Json.Serialization;
 
-namespace Patchable 
+namespace Patchable.Internals
 {
     internal sealed class PatchableCache
     {
@@ -34,12 +43,12 @@ namespace Patchable
                 .ToList();
         }
 
-        private bool FilterIgnoredProperty(PropertyInfo propertyInfo) 
+        private bool FilterIgnoredProperty(PropertyInfo propertyInfo)
         {
             var jsonIgnoreAttribute = propertyInfo.GetCustomAttribute<JsonIgnoreAttribute>(true);
             if (jsonIgnoreAttribute is null)
                 return false;
-            return (jsonIgnoreAttribute.Condition != JsonIgnoreCondition.Never);
+            return jsonIgnoreAttribute.Condition != JsonIgnoreCondition.Never;
         }
     }
 }

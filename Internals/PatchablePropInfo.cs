@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace Patchable
+namespace Patchable.Internals
 {
     internal sealed class PatchablePropInfo
     {
