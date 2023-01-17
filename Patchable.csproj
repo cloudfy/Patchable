@@ -4,9 +4,9 @@
     <TargetFrameworks>netstandard21;net6;net7</TargetFrameworks>
     <PackageId>Patchable</PackageId>
     <Description>Enables easy patch (partial changes) without using JsonPatch for ASP.NET and ASP.NET Core.</Description>
-    <Version>1.0.5</Version>
-    <AssemblyVersion>1.0.5.0</AssemblyVersion>
-    <FileVersion>1.0.5.0</FileVersion>
+    <Version>1.0.6</Version>
+    <AssemblyVersion>1.0.6</AssemblyVersion>
+    <FileVersion>1.0.6</FileVersion>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageLicenseUrl>https://github.com/cloudfy/Patchable/blob/main/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/cloudfy/Patchable</PackageProjectUrl>

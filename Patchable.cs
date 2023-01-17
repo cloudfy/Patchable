@@ -12,12 +12,10 @@ namespace Patchable
         : IDictionary<string, object> where TEntity : class
     {
         private readonly Dictionary<string, object> _valueDictionary = new Dictionary<string, object>();
-        private readonly List<PatchablePropInfo> _entityProperties = new List<PatchablePropInfo>();
+        private  List<PatchablePropInfo> _entityProperties = new List<PatchablePropInfo>();
 
         public Patchable()
         {
-            var cache = PatchableCache.GetOrCreateCache();
-            _entityProperties = cache.GetEntityProperties<TEntity>();
         }
 
         /// <summary>
@@ -28,6 +26,7 @@ namespace Patchable
         /// <param name="options">Optional. Options for patch operation.</param>
         /// <exception cref="ArgumentNullException"></exception>
         public void Patch<TTarget>(TTarget entity, PatchableOptions options = null)
+            where TTarget : class 
         {
             if (entity is null)
                 throw new ArgumentNullException(nameof(entity));
@@ -44,7 +43,11 @@ namespace Patchable
             => Patch<TEntity>(entity, options);
 
         private void SetPropertiesValue<TTarget>(TTarget entity, PatchableOptions options = null)
+            where TTarget : class
         {
+            var cache = PatchableCache.GetOrCreateCache();
+            _entityProperties = cache.GetEntityProperties<TTarget>();
+
             var patchOptions = options ?? new PatchableOptions(false);
 
             foreach (var key in _valueDictionary.Keys)
