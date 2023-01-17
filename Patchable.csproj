@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard21</TargetFrameworks>
+    <TargetFrameworks>netstandard21;net6;net7</TargetFrameworks>
     <PackageId>Patchable</PackageId>
     <Description>Enables easy patch (partial changes) without using JsonPatch for ASP.NET and ASP.NET Core.</Description>
     <Version>1.0.5</Version>
