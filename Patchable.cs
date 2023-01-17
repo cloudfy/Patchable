@@ -20,15 +20,30 @@ namespace Patchable
             _entityProperties = cache.GetEntityProperties<TEntity>();
         }
 
-        public void Patch(TEntity entity, PatchableOptions options = null)
+        /// <summary>
+        /// Patch against target entity (other type).
+        /// </summary>
+        /// <typeparam name="TTarget">Type must have name-wise comparable properties of <typeparamref name="TEntity"/>.</typeparam>.
+        /// <param name="entity">Entity to patch.</param>
+        /// <param name="options">Optional. Options for patch operation.</param>
+        /// <exception cref="ArgumentNullException"></exception>
+        public void Patch<TTarget>(TTarget entity, PatchableOptions options = null)
         {
             if (entity is null)
                 throw new ArgumentNullException(nameof(entity));
 
             SetPropertiesValue(entity, options);
         }
+        /// <summary>
+        /// Patch against entity.
+        /// </summary>
+        /// <param name="entity">Entity to patch.</param>
+        /// <param name="options">Optional. Options for patch operation.</param>
+        /// <exception cref="ArgumentNullException"></exception>
+        public void Patch(TEntity entity, PatchableOptions options = null)
+            => Patch<TEntity>(entity, options);
 
-        private void SetPropertiesValue(TEntity entity, PatchableOptions options = null)
+        private void SetPropertiesValue<TTarget>(TTarget entity, PatchableOptions options = null)
         {
             var patchOptions = options ?? new PatchableOptions(false);
 
@@ -36,6 +51,14 @@ namespace Patchable
             {
                 var property = _entityProperties
                     .FirstOrDefault(p => p.Name.Equals(key, StringComparison.CurrentCultureIgnoreCase));
+
+                // if event delegation ignore property, continue;
+                var eventArgs = new EvaluatePropertyEventArgs<TTarget>(property, entity);
+                patchOptions.OnEvaluateProperty(eventArgs);
+                if (eventArgs.IgnoreProperty)
+                    continue;
+
+                // default
                 if (property is null &&
                     patchOptions.IgnoreInvalidProperties == false)
                 {
