@@ -17,7 +17,7 @@ PS> Install-Package Patchable
 ## Introduction
 Partial changes of entities is a common task when implementing RESTful services in ASP.NET Web API. RESTful services provide the use of [HTTP PATCH](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/PATCH) to conduct partial entity updates.
 
-The ```Patchable``` library enables a convenient approach to only patch partial properties whilst also validating the properties.  
+The ```Patchable``` library enables a convenient approach to only patch partial properties whilst also validating the properties of the containing object. In addition, supporting null value handling (was the property supplied, and was it set to null) is solved.
 
 ### Example
 Follow this example to patch a single item.
@@ -58,9 +58,10 @@ Response:
 }
 ```
 
-
-
 # Documentation
+
+## Using Patchable in tiered or CQRS
+When using Patchable in a tiered layer application or CQRS scope, add the Nuget on the business layer (tiered) or command side (CQRS). Inheritance will handle the population. It is easy to use Patchable in Entity Framework Core (EFCore) to only map changed properties of a given DbSet<>. This minimized database payload of roundtrips and reduce collissions that create bad data.
 
 ## PatchOptions
 
